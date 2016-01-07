@@ -1,5 +1,16 @@
 //Black Jack by Pierre-Christof Ascherl
 
+float P1; //Value for the first card in the players hand 
+float P2; //Value for the second card in the players hand 
+float P3; //Value for the third card in the players hand 
+float P4; //Value for the fourth card in the players hand 
+float P5; //Value for the fifth card in the players hand 
+
+float H1; //Value for the first card in the houses hand
+float H2; //Value for the second card in the houses hand
+float H3; //Value for the third card in the houses hand
+float H4; //Value for the fourth card in the houses hand
+float H5; //Value for the fifth card in the houses hand
 
 void setup () {
 size(650, 475);
