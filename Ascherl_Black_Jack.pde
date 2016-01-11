@@ -12,8 +12,11 @@ int h3; //Value for the third card in the houses hand
 int h4; //Value for the fourth card in the houses hand
 int h5; //Value for the fifth card in the houses hand
 
-int[][] ph = new int[1][5]; //Array to determine which card to give to the player
-int[][] hh = new int[1][5]; //Array to determine which card to give to the house
+int[] ph = new int[5]; //Declare Player Hand Array
+int[] hh = new int[5]; //Declare House Hand Array
+
+//ph = new int[5]; //Setting ph array to have 5 values 
+//hh = new int[5]; //Setting hh array to have 5 values
 
 void setup () {
   size(650, 475);
@@ -51,7 +54,7 @@ void setup () {
   textSize(30);
   text("Your Hand is above", 300, 415);
 
-  //hit and hold buttons
+  //hit, hold and redeal buttons
   fill(255);
   ellipse(75, 200, 50, 50);
 
@@ -65,6 +68,13 @@ void setup () {
   fill(0);
   textSize(15);
   text("Hold", 60, 280);
+  
+  fill(255);
+  ellipse(75, 350, 50, 50);
+  
+  fill(0);
+  textSize(13);
+  text("Redeal", 55, 355);
 
   //Balance Counter
   fill(0);
@@ -89,6 +99,12 @@ void setup () {
   p5 = 0;
 
   //Way to determine if the player's 3,4,5 cards have been used
+
+  ph[0] = 0;
+  ph[1] = 1;
+  ph[2] = 0;
+  ph[3] = 0;
+  ph[4] = 0;
 
   //House's Card Value
 
@@ -134,25 +150,47 @@ void draw () {
   fill (0);
   textSize(20);
   text("" + p5, 580, 310);
+
+  //Check if the player went over 21
+
+  if (p1 + p2 + p3 + p4 + p5 == 21) {
+    fill (0, 0, 255);
+    textSize(70);
+    text("BLACKJACK!!!", 225, 237);
+  } else if (p1 + p2 + p3 + p4 + p5 > 21) {
+    fill(255, 0, 0);
+    textSize(70);
+    text("House Wins", 225, 237);
+  } else if (p1 + p2 + p3 + p4 + p5 < 21 && ph[0] == 1) {
+
+    fill(0, 0, 255);
+    textSize(70);
+    text("Player Wins", 225, 237);
+  }
 }
 
 void mouseClicked () {
 
-  if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 != 21) {   
+  if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[1] == 1 && ph[2] == 0) {   
 
     fill(255);
     rect(350, 250, 75, 100);
 
     p3 = int(random(1, 10));
-    
-  }
-
-  if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 != 21) {   
+    ph[2] = 1;
+  } else if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[2] == 1 && ph[3] == 0) {   
 
     fill(255);
     rect(450, 250, 75, 100);
 
     p4 = int(random(1, 10));
-    
+    ph[3] = 1;
+  } else if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[3] == 1 && ph[4] == 0) { 
+
+    fill(255);
+    rect(550, 250, 75, 100);
+
+    p5 = int(random(1, 10));
+    ph[0] = 1;
   }
 }
