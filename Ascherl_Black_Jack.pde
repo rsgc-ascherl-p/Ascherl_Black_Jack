@@ -12,11 +12,10 @@ int h3; //Value for the third card in the houses hand
 int h4; //Value for the fourth card in the houses hand
 int h5; //Value for the fifth card in the houses hand
 
+int hcontinue; //Determines whether to give the house more cards
+
 int[] ph = new int[5]; //Declare Player Hand Array
 int[] hh = new int[5]; //Declare House Hand Array
-
-//ph = new int[5]; //Setting ph array to have 5 values 
-//hh = new int[5]; //Setting hh array to have 5 values
 
 void setup () {
   size(650, 475);
@@ -105,6 +104,14 @@ void setup () {
   ph[2] = 0;
   ph[3] = 0;
   ph[4] = 0;
+  
+  //Way to determine if the house's 2,3,4,5 cards have been used
+  
+  hh[0] = 1;
+  hh[1] = 0;
+  hh[2] = 0;
+  hh[3] = 0;
+  hh[4] = 0;
 
   //House's Card Value
 
@@ -134,6 +141,8 @@ void setup () {
   fill (0);
   textSize(20);
   text("?", 580, 110);
+  
+  hcontinue = 0;
 }
 
 void draw () {
@@ -167,6 +176,21 @@ void draw () {
     textSize(70);
     text("Player Wins", 225, 237);
   }
+ 
+ if (hcontinue == 1) {
+  h3 = int(random(1, 10)); 
+  hh[1] = 1;
+ }
+ 
+ if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[1] == 1 && hh[2] == 0) {
+  h4 = int(random(1, 10));
+  hh[2] = 1;
+ }
+ 
+ if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[2] == 1 && hh[3] == 0) {
+  h5 = int(random(1, 10));
+  hh[3] = 1;
+ }
 }
 
 void mouseClicked () {
@@ -193,4 +217,15 @@ void mouseClicked () {
     p5 = int(random(1, 10));
     ph[0] = 1;
   }
+  
+  if (mouseX > 50 && mouseX < 100 && mouseY > 325 && mouseY < 375 && h1 + h2 + h3 + h4 + h5 < 21 && hh[0] == 1 && hh[1] == 0) {
+    
+    fill(255);
+    rect(250, 50, 75, 100);
+    
+    h2 = int(random(1, 10));
+    hh[1] = 1;
+    hcontinue = 1;
+  }
+  
 }
