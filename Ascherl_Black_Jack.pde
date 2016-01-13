@@ -13,6 +13,7 @@ int h4; //Value for the fourth card in the houses hand
 int h5; //Value for the fifth card in the houses hand
 
 int hh17; //Determine's if the value of the house's hand is equal to or greater than 17 and less than 21
+int cash; //Player's balance 
 
 int hcontinue; //Determines whether to give the house more cards
 int phold; //Makes it so when the player holds they cant hit anymore
@@ -78,10 +79,13 @@ void setup () {
   textSize(13);
   text("Redeal", 55, 355);
 
+  //Give player a starting balance of 20 (only able to bet 5)
+  cash = 25;
+  
   //Balance Counter
   fill(0);
   textSize(30);
-  text("Balance = __", 75, 415);
+  text("Balance = " + cash, 75, 415);
 
   //Players Card Value
   p1 = int(random(1, 10));
@@ -176,6 +180,7 @@ void draw () {
     fill (0, 0, 255);
     textSize(70);
     text("BLACKJACK!!!", 225, 237);
+    cash = cash + 5;
   } else if (p1 + p2 + p3 + p4 + p5 > 21) {
     fill(255, 0, 0);
     textSize(70);
@@ -184,6 +189,7 @@ void draw () {
     fill(0, 0, 255);
     textSize(70);
     text("Player Wins", 225, 237);
+    cash = cash + 5;
   }
 
   //Computer Logic for cards 3, 4 and 5 to see if the house must continue drawing cards
@@ -236,11 +242,13 @@ void draw () {
     fill(0, 0, 255);
     textSize(70);
     text("Player Wins", 225, 237);
+    cash = cash + 5;
   } 
   if (hcontinue == 1 && hh17 == 1 && (h1 + h2 + h3 + h4 + h5) < (p1 + p2 + p3 + p4 + p5) ) {
     fill(0, 0, 255);
     textSize(70);
     text("Player Wins", 225, 237);
+    cash = cash + 5;
   } 
   if (hcontinue == 1 && hh17 == 1 && (h1 + h2 + h3 + h4 + h5) > (p1 + p2 + p3 + p4 + p5) ) {
     fill(255, 0, 0);
