@@ -12,6 +12,8 @@ int h3; //Value for the third card in the houses hand
 int h4; //Value for the fourth card in the houses hand
 int h5; //Value for the fifth card in the houses hand
 
+int hh17; //Determine's if the value of the house's hand is equal to or greater than 17 and less than 21
+
 int hcontinue; //Determines whether to give the house more cards
 int phold; //Makes it so when the player holds they cant hit anymore
 
@@ -132,6 +134,7 @@ void setup () {
   hcontinue = 0;
   phold = 0;
 
+  //Text Commands for the hosue's cards
   fill (0);
   textSize(20);
   text("" + h2, 280, 110);
@@ -139,10 +142,21 @@ void setup () {
   fill (0);
   textSize(20);
   text("" + h3, 380, 110);
+
+  fill (0);
+  textSize(20);
+  text("" + h4, 480, 110);
+
+  fill (0);
+  textSize(20);
+  text("" + h5, 580, 110);
+
+  //Value to determine whether the house's value is equal to or greater than 17 but less than or equal 21
+  hh17 = 0;
 }
 
 void draw () {
-  //Players Card Value for cards 3 4 and 5
+  //Players Card Value Text Display for cards 3 4 and 5
 
   fill (0);
   textSize(20);
@@ -156,24 +170,6 @@ void draw () {
   textSize(20);
   text("" + p5, 580, 310);
 
-  //House's Card Value Display for cards 2 3 4  and 5
-
-  //fill (0);
-  //textSize(20);
-  //text("" + h2, 280, 110);
-
-  //fill (0);
-  //textSize(20);
-  //text("" + h3, 380, 110);
-
-  fill (0);
-  textSize(20);
-  text("" + h4, 480, 110);
-
-  fill (0);
-  textSize(20);
-  text("" + h5, 580, 110);
-
   //Check if the player went over 21
 
   if (p1 + p2 + p3 + p4 + p5 == 21) {
@@ -185,35 +181,82 @@ void draw () {
     textSize(70);
     text("House Wins", 225, 237);
   } else if (p1 + p2 + p3 + p4 + p5 < 21 && ph[0] == 1) {
-
     fill(0, 0, 255);
     textSize(70);
     text("Player Wins", 225, 237);
   }
 
-  if (hcontinue == 1 && hh[2] == 0) {
-    
+  //Computer Logic for cards 3, 4 and 5 to see if the house must continue drawing cards
+  if (hcontinue == 1 && hh[2] == 0 && h1 + h2 + h3 + h4 + h5 < 17) {
+
     fill(255);
-    rect(250, 50, 75, 100);
+    rect(350, 50, 75, 100);
 
     h3 = int(random(1, 10)); 
 
     fill (0);
     textSize(20);
-    text("" + h3, 280, 110);
-    
+    text("" + h3, 380, 110);
+
     hh[2] = 1;
   }
 
-  //if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[1] == 1 && hh[2] == 0) {
-  // h4 = int(random(1, 10));
-  // hh[2] = 1;
-  //}
+  if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && hh[2] == 1 && hh[3] == 0) {
 
-  //if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[2] == 1 && hh[3] == 0) {
-  // h5 = int(random(1, 10));
-  // hh[3] = 1;
-  //}
+    fill(255);
+    rect(450, 50, 75, 100);
+
+    h4 = int(random(1, 10));
+
+    fill (0);
+    textSize(20);
+    text("" + h4, 480, 110);
+
+    hh[3] = 1;
+  }
+
+  if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && hh[3] == 1 && hh[4] == 0) {
+
+    fill(255);
+    rect(550, 50, 75, 100);
+
+    h5 = int(random(1, 10));
+
+    fill (0);
+    textSize(20);
+    text("" + h5, 580, 110);
+
+    hh[4] = 1;
+  } 
+  //If vaule of house's cards is equal to or greater than 17 and equal to or smaller than 21
+  if (h1 + h2 + h3 + h4 + h5 >= 17 && h1 + h2 + h3 + h4 + h5 <= 21) {    
+    hh17 = 1;
+    //Different text messagaes than can appear after the house can't draw any cards anymore
+  } else if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 > 21) {
+    fill(0, 0, 255);
+    textSize(70);
+    text("Player Wins", 225, 237);
+  } 
+  if (hcontinue == 1 && hh17 == 1 && (h1 + h2 + h3 + h4 + h5) < (p1 + p2 + p3 + p4 + p5) ) {
+    fill(0, 0, 255);
+    textSize(70);
+    text("Player Wins", 225, 237);
+  } 
+  if (hcontinue == 1 && hh17 == 1 && (h1 + h2 + h3 + h4 + h5) > (p1 + p2 + p3 + p4 + p5) ) {
+    fill(255, 0, 0);
+    textSize(70);
+    text("House Wins", 225, 237);
+  }
+  if (hcontinue == 1 && hh17 == 1 && (h1 + h2 + h3 + h4 + h5) == (p1 + p2 + p3 + p4 + p5) ) {
+    fill(254, 209, 77);
+    textSize(70);
+    text("Tied", 225, 237);
+  }
+  if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 == 21) {
+    fill(255, 0, 0);
+    textSize(70);
+    text("House BlackJack", 225, 237);
+  }
 }
 
 void mouseClicked () {
@@ -242,8 +285,8 @@ void mouseClicked () {
     ph[0] = 1;
   }
 
-  //If you press hold let computer determine how many cards to draw
-  if (mouseX > 50 && mouseX < 100 && mouseY > 250 && mouseY < 300 && h1 + h2 + h3 + h4 + h5 < 21 && hh[0] == 1 && hh[1] == 0) {
+  //If you press hold let computer determine how many cards to draw and draw a second card for house
+  if (mouseX > 50 && mouseX < 100 && mouseY > 250 && mouseY < 300 && h1 + h2 + h3 + h4 + h5 < 17 && hh[0] == 1 && hh[1] == 0) {
 
     fill(255);
     rect(250, 50, 75, 100);
