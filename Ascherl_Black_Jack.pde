@@ -13,6 +13,7 @@ int h4; //Value for the fourth card in the houses hand
 int h5; //Value for the fifth card in the houses hand
 
 int hcontinue; //Determines whether to give the house more cards
+int phold; //Makes it so when the player holds they cant hit anymore
 
 int[] ph = new int[5]; //Declare Player Hand Array
 int[] hh = new int[5]; //Declare House Hand Array
@@ -67,10 +68,10 @@ void setup () {
   fill(0);
   textSize(15);
   text("Hold", 60, 280);
-  
+
   fill(255);
   ellipse(75, 350, 50, 50);
-  
+
   fill(0);
   textSize(13);
   text("Redeal", 55, 355);
@@ -104,16 +105,16 @@ void setup () {
   ph[2] = 0;
   ph[3] = 0;
   ph[4] = 0;
-  
+
   //Way to determine if the house's 2,3,4,5 cards have been used
-  
+
   hh[0] = 1;
   hh[1] = 0;
   hh[2] = 0;
   hh[3] = 0;
   hh[4] = 0;
 
-  //House's Card Value
+  //House's First Card Value and text
 
   h1 = int(random(1, 10));
 
@@ -121,28 +122,23 @@ void setup () {
   textSize(20);
   text("" + h1, 180, 110);
 
+  //Value for rest of House's Cards
   h2 = 0;
   h3 = 0;
   h4 = 0;
   h5 = 0;
 
-  fill (0);
-  textSize(20);
-  text("?", 280, 110);
-
-  fill (0);
-  textSize(20);
-  text("?", 380, 110);
-
-  fill (0);
-  textSize(20);
-  text("?", 480, 110);
-
-  fill (0);
-  textSize(20);
-  text("?", 580, 110);
-  
+  //Commands to make it so when player holds they cant hit anymore and to let program know that it should calculate the houses turn
   hcontinue = 0;
+  phold = 0;
+
+  fill (0);
+  textSize(20);
+  text("" + h2, 280, 110);
+
+  fill (0);
+  textSize(20);
+  text("" + h3, 380, 110);
 }
 
 void draw () {
@@ -160,6 +156,24 @@ void draw () {
   textSize(20);
   text("" + p5, 580, 310);
 
+  //House's Card Value Display for cards 2 3 4  and 5
+
+  //fill (0);
+  //textSize(20);
+  //text("" + h2, 280, 110);
+
+  //fill (0);
+  //textSize(20);
+  //text("" + h3, 380, 110);
+
+  fill (0);
+  textSize(20);
+  text("" + h4, 480, 110);
+
+  fill (0);
+  textSize(20);
+  text("" + h5, 580, 110);
+
   //Check if the player went over 21
 
   if (p1 + p2 + p3 + p4 + p5 == 21) {
@@ -176,40 +190,50 @@ void draw () {
     textSize(70);
     text("Player Wins", 225, 237);
   }
- 
- if (hcontinue == 1) {
-  h3 = int(random(1, 10)); 
-  hh[1] = 1;
- }
- 
- if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[1] == 1 && hh[2] == 0) {
-  h4 = int(random(1, 10));
-  hh[2] = 1;
- }
- 
- if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[2] == 1 && hh[3] == 0) {
-  h5 = int(random(1, 10));
-  hh[3] = 1;
- }
+
+  if (hcontinue == 1 && hh[2] == 0) {
+    
+    fill(255);
+    rect(250, 50, 75, 100);
+
+    h3 = int(random(1, 10)); 
+
+    fill (0);
+    textSize(20);
+    text("" + h3, 280, 110);
+    
+    hh[2] = 1;
+  }
+
+  //if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[1] == 1 && hh[2] == 0) {
+  // h4 = int(random(1, 10));
+  // hh[2] = 1;
+  //}
+
+  //if (hcontinue == 1 && h1 + h2 + h3 + h4 + h5 < 17 && h1 + h2 + h3 + h4 + h5 > 21 && hh[2] == 1 && hh[3] == 0) {
+  // h5 = int(random(1, 10));
+  // hh[3] = 1;
+  //}
 }
 
 void mouseClicked () {
 
-  if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[1] == 1 && ph[2] == 0) {   
+  //Hit mouseclicked commands, if you press hit and youre revealed cards equal less than 21 add a card
+  if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[1] == 1 && ph[2] == 0 && phold == 0) {   
 
     fill(255);
     rect(350, 250, 75, 100);
 
     p3 = int(random(1, 10));
     ph[2] = 1;
-  } else if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[2] == 1 && ph[3] == 0) {   
+  } else if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[2] == 1 && ph[3] == 0 && phold == 0) {   
 
     fill(255);
     rect(450, 250, 75, 100);
 
     p4 = int(random(1, 10));
     ph[3] = 1;
-  } else if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[3] == 1 && ph[4] == 0) { 
+  } else if (mouseX > 50 && mouseX < 100 && mouseY > 175 && mouseY < 225 && p1 + p2 + p3 + p4 + p5 <= 21 && ph[3] == 1 && ph[4] == 0 && phold == 0) { 
 
     fill(255);
     rect(550, 250, 75, 100);
@@ -217,15 +241,22 @@ void mouseClicked () {
     p5 = int(random(1, 10));
     ph[0] = 1;
   }
-  
-  if (mouseX > 50 && mouseX < 100 && mouseY > 325 && mouseY < 375 && h1 + h2 + h3 + h4 + h5 < 21 && hh[0] == 1 && hh[1] == 0) {
-    
+
+  //If you press hold let computer determine how many cards to draw
+  if (mouseX > 50 && mouseX < 100 && mouseY > 250 && mouseY < 300 && h1 + h2 + h3 + h4 + h5 < 21 && hh[0] == 1 && hh[1] == 0) {
+
     fill(255);
     rect(250, 50, 75, 100);
-    
+
     h2 = int(random(1, 10));
+
+    fill (0);
+    textSize(20);
+    text("" + h2, 280, 110);
+
     hh[1] = 1;
+
     hcontinue = 1;
+    phold = 1;
   }
-  
 }
